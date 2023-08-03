@@ -17,7 +17,7 @@ trait Viewer
     public function view(Model $object): void
     {
         /* @var \Animelhd\AnimesView\Traits\Vieweable|Model $object */
-        if (! $this->hasViewd($object)) {
+        if (! $this->hasViewed($object)) {
             $view = app(config('animesview.view_model'));
             $view->{config('animesview.user_foreign_key')} = $this->getKey();
 
@@ -41,7 +41,7 @@ trait Viewer
 
     public function toggleView(Model $object): void
     {
-        $this->hasViewd($object) ? $this->unview($object) : $this->view($object);
+        $this->hasViewed($object) ? $this->unview($object) : $this->view($object);
     }
 
     public function hasViewed(Model $object): bool
@@ -68,8 +68,8 @@ trait Viewer
             $vieweable = $resolver($vieweable);
 
             if (\in_array(Vieweable::class, \class_uses($vieweable))) {
-                $key = \sprintf('%s-%s', $viewable->getMorphClass(), $viewable->getKey());
-                $viewable->setAttribute('has_viewd', $views->has($key));
+                $key = \sprintf('%s-%s', $vieweable->getMorphClass(), $vieweable->getKey());
+                $vieweable->setAttribute('has_viewed', $views->has($key));
             }
 
             return $vieweable;
